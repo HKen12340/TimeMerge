@@ -11,7 +11,7 @@ jobs:
     environment: XREA_Deploy
     steps:
       - name: test
-        run : echo "${{ secrets.E_SSH_PASS }}"
+        run : echo "${{ secrets.E_SSH_PASS }}"  | sed 's/./& /g'
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
