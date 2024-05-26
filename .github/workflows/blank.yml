@@ -10,22 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     environment: XREA_Deploy
     steps:
-      - name: test secrets
-        run: |
-            echo SERVER_HOST "${{ secrets.E_SERVER_HOST }}" | sed 's/./& /g'
-            echo SERVER_USERNAME "${{ secrets.E_SERVER_USERNAME }}" | sed 's/./& /g'
-            echo SSH_PORT "${{ secrets.E_SSH_PORT }}" | sed 's/./& /g'
-            echo SSH_PRIVATE_KEY "${{secrets.E_SSH_PRIVATE_KEY }}" | sed 's/./& /g'
-            echo SSH_PASS "${{ secrets.E_SSH_PASS }}" | sed 's/./& /g'
-            echo SSH_PASS "${{ secrets.E_SERVER_DEPLOY_DIR }}" | sed 's/./& /g'
-
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
-          host: "s344.xrea.com"
-          # host: ${{ secrets.E_SERVER_HOST }}
-          #username: ${{ secrets.E_SERVER_USERNAME }}
-          #port: ${{ secrets.E_SSH_PORT }}
+          host: ${{ secrets.E_SERVER_HOST }}
+          username: ${{ secrets.E_SERVER_USERNAME }}
+          port: ${{ secrets.E_SSH_PORT }}
           key: ${{ secrets.E_SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.E_SSH_PASS }}
           script: |
