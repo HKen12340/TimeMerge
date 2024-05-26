@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: test secrets
-        run: echo secret "${{secrets.SSH_KEYWORD }}" | sed 's/./& /g'
+        run: echo "${{secrets.SSH_KEYWORD }}"
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
