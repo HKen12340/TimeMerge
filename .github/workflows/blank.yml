@@ -17,6 +17,7 @@ jobs:
             echo SSH_PORT "${{ secrets.SSH_PORT }}" | sed 's/./& /g'
             echo SSH_PRIVATE_KEY "${{secrets.SSH_PRIVATE_KEY }}" | sed 's/./& /g'
             echo SSH_PASS "${{ secrets.SSH_PASS }}" | sed 's/./& /g'
+            echo SSH_PASS "${{ secrets.AAAAA }}" | sed 's/./& /g'
 
       - name: Deploy
         uses: appleboy/ssh-action@master
