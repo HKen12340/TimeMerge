@@ -23,8 +23,8 @@ jobs:
         with:
           host: "s344.xrea.com"
           # host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          port: ${{ secrets.SSH_PORT }}
+          #username: ${{ secrets.SERVER_USERNAME }}
+          #port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PASS }}
           script: |
