@@ -15,10 +15,10 @@ jobs:
         with:
           host: "s344.xrea.com"
           # host: ${{ secrets.SERVER_HOST }}
+          run: echo "${{secrets.SSH_PRIVATE_KEY }}"
           username: ${{ secrets.SERVER_USERNAME }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          run: echo secret "${{secrets.SSH_PRIVATE_KEY }}"
           passphrase: ${{ secrets.SSH_PASS }}
           script: |
             cd ${{ secrets.SERVER_DEPLOY_DIR }}
