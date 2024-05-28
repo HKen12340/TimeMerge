@@ -11,34 +11,34 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('Event', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->string("EventName");
+            $table->string("event_name");
             $table->text("description");
-            $table->text("URL");
+            $table->text("description");
             $table->timestamps();
         });
 
-        Schema::create('EventDate', function (Blueprint $table) {
+        Schema::create('event_dates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("Event_id")->constrained("Event");
+            $table->foreignId("event_id")->constrained("events");
             $table->string("date");
             $table->timestamps();
         });
 
-        Schema::create('JoinUser', function (Blueprint $table) {
+        Schema::create('join_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("Event_id")->constrained("Event");
+            $table->foreignId("event_id")->constrained("events");
             $table->string("name");
             $table->string("email");
             $table->timestamps();
         });
 
-        Schema::create('JoinFlag', function (Blueprint $table) {
+        Schema::create('join_flags', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("Join_id")->constrained("JoinUser");
-            $table->foreignId("Date_id")->constrained("EventDate");
-            $table->boolean("JoinFlag");
+            $table->foreignId("join_id")->constrained("join_users");
+            $table->foreignId("date_id")->constrained("event_dates");
+            $table->boolean("join_flag");
             $table->timestamps();
         });
     }
@@ -48,9 +48,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('JoinFlag');
-        Schema::dropIfExists('JoinUser');
-        Schema::dropIfExists('EventDate');
-        Schema::dropIfExists('Event');
+        Schema::dropIfExists('join_flags');
+        Schema::dropIfExists('join_users');
+        Schema::dropIfExists('event_dates');
+        Schema::dropIfExists('events');
     }
 };
