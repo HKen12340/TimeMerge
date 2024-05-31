@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\Models\Event;
+use Illuminate\Http\Resources;
+use App\Models\Event;
 use Illuminate\Support\Str;
+use Log;
 
 
 class EventController extends Controller
@@ -25,7 +27,7 @@ class EventController extends Controller
      */
     public function create(Request $request) //イベント作成
     {
-        $EventId = Str::random(20);
+        $EventId = Str::random(20);//ランダム文字20字生成　IDがかぶった際の処理を追加予定
         $Event = new Event();
         $Event->create([
             'event_name' => $request->name,
@@ -33,7 +35,7 @@ class EventController extends Controller
             'URL' => "https::sample/sample?id=".$EventId
         ]);
 
-        return response()->join(["message" => "success create Event!"],201);
+        return response()->json(["message" => "success create Event!"],201);
     }
 
     /**
@@ -47,40 +49,43 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($EventId)
+    public function show(Request $request)
     {
-        $Event = Event::find($EventId);
-        return response(["event" => $Event],201);
+        // Log::info('引数の中身' .print_r($request, true));
+        $Data = Event::find($request->id);
+        return response()->json(["event" => $Data],201);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request,$EventId)
-    {
-        $event = Event::find($EventId);
-
-        $event->create([
-            'event_name' => $request->name,
-            'description' => $request->description,
-        ]);
-
-        return response()->join(["message" => "success update Event!"],201);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)//イベント更新
+    public function edit()
     {
         
     }
 
     /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request)//イベント更新
+    {
+        $Data = Event::find($request->id);
+
+        $Data->create([
+            'event_name' => $request->name,
+            'description' => $request->description,
+        ]);
+
+        return response()->json(["message" => "success update Event!"],201);
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)//イベント削除
+    public function destroy(Request $request)//イベント削除
     {
-        //
+        $Event = new Event();
+        $Event->where('id',$request->id)->delete();
+        return response()->json(["message" => "success delete Event!"],201);
     }
 }

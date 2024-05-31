@@ -123,4 +123,8 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'aliases' => [
+        'Log' => Illuminate\Support\Facades\Log::class,
+    ]
+
 ];
