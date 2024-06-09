@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources;
 use App\Models\Event;
+use App\Models\EventDate;
 use Illuminate\Support\Str;
-use Log;
-
 
 class EventController extends Controller
 {
@@ -27,15 +26,33 @@ class EventController extends Controller
      */
     public function create(Request $request) //イベント作成
     {
-        $EventId = Str::random(20);//ランダム文字20字生成　IDがかぶった際の処理を追加予定
+        $UrlId = Str::random(20);//ランダム文字20字生成　IDがかぶった際の処理を追加予定
         $Event = new Event();
-        $Event->create([
+        //clock($EventId); デバック
+        $EventModel = $Event->create([
             'event_name' => $request->name,
             'description' => $request->description,
-            'URL' => "https::sample/sample?id=".$EventId
+            'url' => $UrlId,
+            'mail_text' => $request->MailText,
         ]);
 
-        return response()->json(["message" => "success create Event!"],201);
+        $EventDate = new EventDate();
+
+        clock($request->date);
+        clock("id:".$EventModel->id);
+
+        foreach($request->date as $date){
+            clock($date);
+            $EventDate->create([
+                'event_id' => $EventModel->id,
+                'date' => $date
+            ]);
+        }
+
+        
+
+        return response()->json(["message" => "success create Event!"]);
+        
     }
 
     /**
@@ -50,9 +67,9 @@ class EventController extends Controller
      * Display the specified resource.
      */
     public function show(Request $request)
-    {
-        // Log::info('引数の中身' .print_r($request, true));
-        $Data = Event::find($request->id);
+    {        
+        $Data = Event::with(['EventDate'])->where('url',$request->id)->get()->toArray();
+        clock($Data);
         return response()->json(["event" => $Data],201);
     }
 

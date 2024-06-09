@@ -9,7 +9,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('/show',[EventController::class,'show']);
+Route::get('/show',[EventController::class,'show']);
 Route::post('/create',[EventController::class,'create']);
 Route::put('/update',[EventController::class,'update']);
 Route::delete('/delete',[EventController::class,'destroy']);

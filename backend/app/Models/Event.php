@@ -12,11 +12,12 @@ class Event extends Model
     protected $fillable = [
      'event_name',
      'description',
-     'URL'
+     'mail_text',
+     'url'
     ];
 
     public function eventDate(): HasMany {
-        return $this->hasMany(EventDate::class);
+        return $this->hasMany(EventDate::class,'event_id','id');
     }
 
 

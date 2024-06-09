@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string("event_name");
             $table->text("description");
+            $table->string("url");
+            $table->text("mail_text");
             $table->timestamps();
         });
 

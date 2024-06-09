@@ -1,0 +1,1 @@
+$e = App\Models\Event::with(['EventDate'])->find(6)->toArray();
