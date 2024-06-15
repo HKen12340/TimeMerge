@@ -20,5 +20,9 @@ class Event extends Model
         return $this->hasMany(EventDate::class,'event_id','id');
     }
 
+    public function joinUser(): HasMany {
+        return $this->hasMany(joinUser::class,'event_id','id')->with("JoinFlag");
+    }
+
 
 }

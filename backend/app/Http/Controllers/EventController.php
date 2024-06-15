@@ -68,7 +68,8 @@ class EventController extends Controller
      */
     public function show(Request $request)
     {        
-        $Data = Event::with(['EventDate'])->where('url',$request->id)->get()->toArray();
+        $Data = Event::with(['EventDate','joinUser'])->where('url',$request->id)->get()->toArray();
+
         clock($Data);
         return response()->json(["event" => $Data],201);
     }
