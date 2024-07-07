@@ -48,11 +48,7 @@ class EventController extends Controller
                 'date' => $date
             ]);
         }
-
-        
-
         return response()->json(["message" => "success create Event!"]);
-        
     }
 
     /**
