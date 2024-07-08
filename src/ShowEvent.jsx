@@ -1,6 +1,8 @@
 import './App.css';
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import maru from './maru.png';
+import batu from './batu.png';
 
  function ShowEvent() {
   const { id } = useParams();
@@ -59,12 +61,25 @@ import { useParams } from "react-router-dom";
     console.log(dateArray)
     
     const postData = {
+      'event_id':id,
       'username':username,
       'email':email,
-      'remarks':remarks
+      'remarks':remarks,
+      'flags':dateArray
     }
     console.log(postData);
     console.log(JSON.stringify(postData));
+
+    fetch("http://127.0.0.1:8000/api/addSchedule",{
+      method: 'POST',
+      body:JSON.stringify(postData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+
+    }) .then((response) => {
+      console.log(response)
+    })
   }
 
   return (
@@ -101,8 +116,10 @@ import { useParams } from "react-router-dom";
               event_date.map((event_date,index1) => (
                 <div>
                   {event_date.date}
-                  <input type="radio" name={"r"+index1}  value="true" />
-                  <input type="radio" name={"r"+index1} value="false" checked/>
+                  <input type="radio" id={"r"+index1 + "L"} name={"r"+index1}  value="true" />
+                  <label htmlFor={"r"+index1 + "L"}><img src={maru} with="40" height="40" /></label>
+                  <input type="radio" id={"r"+index1 +"R"} name={"r"+index1} value="false" checked/>
+                  <label htmlFor={"r"+index1 + "R"}><img src={batu} with="40" height="40" /></label>
                 </div>
               ))  
               }

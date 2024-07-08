@@ -17,3 +17,23 @@ th {
   border-collapse: collapse;
   padding: 5px;
 }
+
+input[type="radio"] {
+  display: none;
+}
+
+/* 画像の周りに隙間をあける */
+label img {
+  margin: 3px;
+  padding: 5px;
+}
+
+/* 未選択の場合、色を薄くする */
+input[type="radio"]+label img {
+  opacity: 0.2;
+}
+
+/* 選択済みの場合、色を濃くする */
+input[type="radio"]:checked+label img {
+  opacity: 1;
+}

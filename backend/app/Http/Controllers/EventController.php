@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources;
 use App\Models\Event;
 use App\Models\EventDate;
+use App\Models\JoinUser;
 use Illuminate\Support\Str;
 
 class EventController extends Controller
@@ -73,9 +74,11 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
+    public function addSchedule(Request $request)
     {
-        
+        //JoinUser
+
+        return response()->json(["message" => "OK"],201);
     }
 
     /**
