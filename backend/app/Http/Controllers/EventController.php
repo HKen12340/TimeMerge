@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources;
 use App\Models\Event;
 use App\Models\EventDate;
+use App\Models\JoinFlag;
 use App\Models\JoinUser;
 use Illuminate\Support\Str;
 
@@ -77,6 +78,22 @@ class EventController extends Controller
     public function addSchedule(Request $request)
     {
         //JoinUser
+        $EventId = Event::where("url",$request->url)->first();
+        $EventDateId = EventDate::where("event_id",$EventId->id)->first();
+
+        $CreateJoin = JoinUser::create([
+            'event_id' <= $EventId->id,
+            'name' <= $request->username,
+            'email' <= $request->email
+        ]);
+        
+        foreach($request->flags as $flag){
+            JoinFlag::create([
+                'join_id' <= $CreateJoin->id,
+                'date_id' <= $EventDateId->id,
+                'join_flag' => $flag
+            ]);
+        }
 
         return response()->json(["message" => "OK"],201);
     }
