@@ -61,11 +61,11 @@ import batu from './batu.png';
     console.log(dateArray)
     
     const postData = {
-      'event_id':id,
+      'url':id,
       'username':username,
       'email':email,
       'remarks':remarks,
-      'flags':dateArray
+      'flags':dateArray,
     }
     console.log(postData);
     console.log(JSON.stringify(postData));
@@ -116,9 +116,9 @@ import batu from './batu.png';
               event_date.map((event_date,index1) => (
                 <div>
                   {event_date.date}
-                  <input type="radio" id={"r"+index1 + "L"} name={"r"+index1}  value="true" />
+                  <input type="radio" id={"r"+index1 + "L"} name={"r"+index1}  value="1" />
                   <label htmlFor={"r"+index1 + "L"}><img src={maru} with="40" height="40" /></label>
-                  <input type="radio" id={"r"+index1 +"R"} name={"r"+index1} value="false" checked/>
+                  <input type="radio" id={"r"+index1 +"R"} name={"r"+index1} value="0" checked/>
                   <label htmlFor={"r"+index1 + "R"}><img src={batu} with="40" height="40" /></label>
                 </div>
               ))  

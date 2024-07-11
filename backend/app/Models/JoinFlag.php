@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class JoinFlag extends Model
 {
     use HasFactory;
-    protected $fillable = ['join_flag'];
+    protected $fillable = ['join_id','date_id','join_flag'];
 }

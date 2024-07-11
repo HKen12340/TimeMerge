@@ -77,20 +77,20 @@ class EventController extends Controller
      */
     public function addSchedule(Request $request)
     {
-        //JoinUser
         $EventId = Event::where("url",$request->url)->first();
         $EventDateId = EventDate::where("event_id",$EventId->id)->first();
 
         $CreateJoin = JoinUser::create([
-            'event_id' <= $EventId->id,
-            'name' <= $request->username,
-            'email' <= $request->email
+            'event_id' => $EventId->id,
+            'name' => $request->username,
+            'email' => $request->email,
         ]);
+        // clock($CreateJoin);
         
         foreach($request->flags as $flag){
             JoinFlag::create([
-                'join_id' <= $CreateJoin->id,
-                'date_id' <= $EventDateId->id,
+                'join_id' => $CreateJoin->id,
+                'date_id' => $EventDateId->id,
                 'join_flag' => $flag
             ]);
         }

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class JoinUser extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','email'];
+    protected $fillable = ['event_id','name','email'];
 
     public function JoinFlag(): HasMany {
         return $this->hasMany(JoinFlag::class,'join_id','id');
