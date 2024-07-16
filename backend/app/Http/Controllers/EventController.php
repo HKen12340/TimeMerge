@@ -79,6 +79,9 @@ class EventController extends Controller
     {
         $EventId = Event::where("url",$request->url)->first();
         $EventDateId = EventDate::where("event_id",$EventId->id)->first();
+        clock($request->username);
+        clock($request->email);
+        clock($request->remarks);
 
         $CreateJoin = JoinUser::create([
             'event_id' => $EventId->id,

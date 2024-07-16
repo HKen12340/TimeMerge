@@ -7,24 +7,26 @@ import batu from './batu.png';
  function ShowEvent() {
   const { id } = useParams();
   const [Content,SetContent] = useState();
+  const [update,setUpdata]=useState(false)//強制レンダリング用ステート
+
+
+  const fetchEventData = async () => {
+    const url = 'http://127.0.0.1:8000/api/show?id='+id;
+    try {
+      const res = await fetch(url);
+      const json = await res.json();
+      console.log(json);
+      SetContent(Object.entries(json));
+      console.log(Content[0][1][0]["join_user"][0]["join_flag"]);
+    } catch (e) {
+      console.log("error", e);
+    }
+}
 
   useEffect(()=>{
-    const fetchEventData = async () => {
-      const url = 'http://127.0.0.1:8000/api/show?id='+id;
-      try {
-        const res = await fetch(url);
-        const json = await res.json();
-        console.log(json);
-        SetContent(Object.entries(json));
-        console.log(Content[0][1][0]["join_user"][0]["join_flag"]);
-      } catch (e) {
-        console.log("error", e);
-      }
-  }
-
-  fetchEventData(); //呼び出し
-  }, [id]);
-
+    fetchEventData(); //呼び出し
+  }, [update]);
+  
   if (!Content) {
     return <div>Loading...</div>;
   }
@@ -42,6 +44,14 @@ import batu from './batu.png';
     let username = document.getElementById('username').value;
     let email = document.getElementById('email').value;
     let remarks = document.getElementById('remarks').value;
+
+    document.getElementById('username').value = "";
+    document.getElementById('email').value = "";
+    document.getElementById('remarks').value = "";
+
+    console.log("username："+username)
+    console.log("email"+email)
+    console.log("remarks"+remarks)
     
     var dateArray = [];
 
@@ -79,7 +89,9 @@ import batu from './batu.png';
 
     }) .then((response) => {
       console.log(response)
+      setUpdata(update?false:true)//強制レンダリング用ステート
     })
+    fetchEventData();
   }
 
   return (
@@ -121,7 +133,7 @@ import batu from './batu.png';
                   <input type="radio" id={"r"+index1 +"R"} name={"r"+index1} value="0" checked/>
                   <label htmlFor={"r"+index1 + "R"}><img src={batu} with="40" height="40" /></label>
                 </div>
-              ))  
+              ))
               }
               <div>
                 <label htmlFor="">名前</label>
