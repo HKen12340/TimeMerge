@@ -50,7 +50,7 @@ class EventController extends Controller
                 'date' => $date
             ]);
         }
-        return response()->json(["message" => "success create Event!"]);
+        return response()->json(["message" => "success create Event!","EventUrl" => $EventModel->url]);
     }
 
     /**

@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import './App.css';
 import React,{useState} from 'react';
 
 function EventCreate() {
+  const navigate = useNavigate();
+
   const[dateInputList,SetdateInputList] = useState([
     <input type='date' name='date[]' id='dates'></input>
   ]);
@@ -53,7 +56,12 @@ const SubmitEevnts = () => {
       },
 
     }) .then((response) => {
-      console.log(response)
+      let jsonData = response.json();
+
+      //PromiseResultから値を取り出す
+      jsonData.then(response => { 
+        navigate("/show/"+ response.EventUrl);
+      })
     })
 }
 
