@@ -4,6 +4,7 @@ import {BrowserRouter,Route,Routes,Link} from 'react-router-dom';
 
 import EventCreate from './EventCreate'; 
 import ShowEvent from './ShowEvent';
+import Page404 from './NotFound';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path='/' element={<EventCreate />}/>
         <Route path='/show/:id' element={<ShowEvent />}/>
+        <Route path="*" element={<Page404 />} />
       </Routes>
     </BrowserRouter>
     </div>

@@ -34,7 +34,7 @@ import batu from './batu.png';
   const event = Content[0][1][0];
   
   if(!event) {
-    return <div>No event data available.</div>;
+    return <div>入力されたIDは存在しないかすでに削除されています</div>;
   }
 
   //JSONデータを分割代入
