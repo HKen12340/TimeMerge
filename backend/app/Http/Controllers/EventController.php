@@ -106,7 +106,7 @@ class EventController extends Controller
      */
     public function update(Request $request)//イベント更新
     {
-        $Data = Event::where('id',$request->id)
+        $Data = Event::where('url',$request->url)
         ->update([
             'event_name' => $request->name,
             'description' => $request->description,
