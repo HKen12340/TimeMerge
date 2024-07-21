@@ -57,10 +57,10 @@ const SubmitEevnts = () => {
 
     }) .then((response) => {
       let jsonData = response.json();
-
+      
       //PromiseResultから値を取り出す
       jsonData.then(response => { 
-        navigate("/show/"+ response.EventUrl);
+        navigate("/EventUrlShow/"+ response.EventUrl);
       })
     })
 }
@@ -71,7 +71,9 @@ const SubmitEevnts = () => {
         <h1>ヘッダー</h1>
       </header>
       <form action="" method='post' id='form1'> 
+        <label htmlFor="">イベント名</label>
         <input type='text' name='name' id='eventName'></input>
+        <label htmlFor="">説明</label>
         <textarea cols="50" rows="6" name='descriptoin' id='descriptoin'></textarea>
         <ul>
         {
@@ -84,10 +86,10 @@ const SubmitEevnts = () => {
         }
         </ul>
         <button type='button' onClick={addDateInput}>日程追加</button>
+        <label htmlFor="">メール本文</label>
         <textarea cols="50" rows="6" name='mailText' id='mailText'></textarea>
         <button type="button" onClick={SubmitEevnts}>送信</button>
-        </form>
-      
+      </form>
     </div>
   );
 

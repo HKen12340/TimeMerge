@@ -1,6 +1,6 @@
 import './App.css';
 import { React, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import maru from './maru.png';
 import batu from './batu.png';
 
@@ -9,6 +9,7 @@ import batu from './batu.png';
   const [Content,SetContent] = useState();
   const [update,setUpdata]=useState(false)//強制レンダリング用ステート
 
+  const navigate = useNavigate();
 
   const fetchEventData = async () => {
     const url = 'http://127.0.0.1:8000/api/show?id='+id;
@@ -94,6 +95,11 @@ import batu from './batu.png';
     fetchEventData();
   }
 
+  const eventEdit = () => {
+    alert("aaa");
+    navigate('/EventEdit/' + id);
+  }
+
   return (
     <div>
      URL：http://localhost:3000/show/{id}
@@ -149,6 +155,7 @@ import batu from './batu.png';
               </div>
               <div>
                 <button type="button" onClick={SubmitEevnts}>送信</button>
+                <button type='button' onClick={eventEdit}>編集</button>
               </div>
           </form>
          </div>
