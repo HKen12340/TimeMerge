@@ -22,14 +22,22 @@ return new class extends Migration
 
         Schema::create('event_dates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("event_id")->constrained("events");
+
+            $table->foreignId("event_id")->
+            constrained("events")->
+            cascadeOnDelete();
+
             $table->string("date");
             $table->timestamps();
         });
 
         Schema::create('join_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("event_id")->constrained("events");
+
+            $table->foreignId("event_id")->
+            constrained("events")->
+            cascadeOnDelete();
+
             $table->string("name");
             $table->string("email");
             $table->timestamps();
@@ -38,7 +46,11 @@ return new class extends Migration
         Schema::create('join_flags', function (Blueprint $table) {
             $table->id();
             $table->foreignId("join_id")->constrained("join_users");
-            $table->foreignId("date_id")->constrained("event_dates");
+            
+            $table->foreignId("date_id")->
+            constrained("event_dates")->
+            cascadeOnDelete();
+            
             $table->boolean("join_flag");
             $table->timestamps();
         });

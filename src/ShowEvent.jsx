@@ -100,6 +100,25 @@ import batu from './batu.png';
     navigate('/EventEdit/' + id);
   }
 
+  const eventDelete = () => {
+    const postData = {
+      'url':id
+    }
+    console.log(postData);
+    console.log(JSON.stringify(postData));
+
+    fetch("http://127.0.0.1:8000/api/delete",{
+      method: 'delete',
+      body:JSON.stringify(postData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+
+    }) .then((response) => {
+      navigate('/');
+    })
+  }
+
   return (
     <div>
      URL：http://localhost:3000/show/{id}
@@ -156,6 +175,7 @@ import batu from './batu.png';
               <div>
                 <button type="button" onClick={SubmitEevnts}>送信</button>
                 <button type='button' onClick={eventEdit}>編集</button>
+                <button type='button' onClick={eventDelete}>削除</button>
               </div>
           </form>
          </div>

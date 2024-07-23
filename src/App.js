@@ -8,7 +8,6 @@ import EventUrlShow from './EventUrlShow';
 import EventEdit from './EventEdit';
 import Page404 from './NotFound';
 
-
 function App() {
 
   return (

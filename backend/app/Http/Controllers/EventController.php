@@ -123,7 +123,7 @@ class EventController extends Controller
     public function destroy(Request $request)//イベント削除
     {
         $Event = new Event();
-        $Event->where('id',$request->id)->delete();
+        $Event->where('url',$request->url)->delete();
         return response()->json(["message" => "success delete Event!"],201);
     }
 }
