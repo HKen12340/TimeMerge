@@ -106,12 +106,14 @@ class EventController extends Controller
      */
     public function update(Request $request)//イベント更新
     {
+        clock($request);
         $Data = Event::where('url',$request->url)
         ->update([
             'event_name' => $request->name,
             'description' => $request->description,
+            'mail_text' => $request->mail_text
         ]);
-
+        clock($Data);
         return response()->json(["message" => "success update Event!"],201);
     }
 

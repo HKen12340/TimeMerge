@@ -5,10 +5,9 @@ import { useNavigate } from "react-router-dom";
 function EventEdit(){
   const { id } = useParams();
   const [Content,SetContent] = useState();
-  const [update,setUpdata]=useState(false)
   const [EventName, setEventNameText] = useState("");
-  const [Descriptoin, descriptoinText] = useState("");
-
+  const [Descriptoin, setDescriptoin] = useState("");
+  const [MailText, setMailText] = useState("");
   const navigate = useNavigate();
 
   const fetchEventData = async () => {
@@ -16,10 +15,11 @@ function EventEdit(){
     try {
       const res = await fetch(url);
       const json = await res.json();
-      console.log(json);
       SetContent(Object.entries(json));
-      console.log(Content[0][1][0]["event_name"])
-      setEventNameText(Content[0][1][0]["event_name"])
+      let resultData = Object.entries(json);
+      setEventNameText(resultData[0][1][0]["event_name"])
+      setDescriptoin(resultData[0][1][0]["description"])
+      setMailText(resultData[0][1][0]["mail_text"]);
     } catch (e) {
       console.log("error", e);
     }
@@ -40,43 +40,45 @@ function EventEdit(){
     return <div>入力されたIDは存在しないかすでに削除されています</div>;
   }
 
-  //JSONデータを分割代入
-  const {event_name, description, join_user, event_date} = event; 
-
-  const SubmitEevnts = () => {
-    let eventName = document.getElementById('eventName').value;
-    let descriptoin = document.getElementById('descriptoin').value;
-    //let mailText = document.getElementById('mailText').value;
-  
+  const  SubmitEevnts = () => {
     const postData = {
-      'name':eventName,
-      'description':descriptoin,
+      'name':EventName,
+      'description':Descriptoin,
+      'mail_text':MailText,
       'url':id
     }
-    
-      fetch("http://127.0.0.1:8000/api/update",{
-        method: 'post',
-        body:JSON.stringify(postData),
-        headers: {
-          'Content-Type': 'application/json',
-        },  
-      }) .then((response) => {
+
+    console.log(JSON.stringify(postData))
+
+     fetch("http://127.0.0.1:8000/api/update",{
+      method: 'put',
+      body:JSON.stringify(postData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }) .then((response) => {
           navigate("/show/"+ id);
-          setUpdata(update?false:true);
-      })
+    }) .catch(error => {
+        console.log(error)
+     });
+
   }
 
   return(
     <div>
         {Content === undefined ? "" : 
           <div>
-            <form>
+            <form method="put">
               <label htmlFor="">イベント名</label>
-              <input type="text" id="eventName" value={EventName}/>
+              <input type="text" id="eventName" defaultValue={EventName} 
+              onChange={(e) => setEventNameText(e.target.value)}/>
               <label htmlFor="" >説明</label>
-              <textarea  id="descriptoin" value={description}></textarea>
-              <input type="text" />
-              <input type="submit" onClick={SubmitEevnts} value="送信" />
+              <textarea  id="descriptoin" defaultValue={Descriptoin}
+               onChange={(e) => setDescriptoin(e.target.value)}></textarea>
+               <label htmlFor="">メール本文</label>
+               <input type="text"  defaultValue={MailText} 
+                onChange={(e) => setMailText(e.target.value)}  />
+              <input type="button" onClick={SubmitEevnts} defaultValue="送信" />
             </form>    
           </div>
         }

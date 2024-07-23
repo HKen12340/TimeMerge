@@ -38,6 +38,7 @@ import batu from './batu.png';
     return <div>入力されたIDは存在しないかすでに削除されています</div>;
   }
 
+
   //JSONデータを分割代入
   const {event_name, description, join_user, event_date} = event; 
 
@@ -96,7 +97,6 @@ import batu from './batu.png';
   }
 
   const eventEdit = () => {
-    alert("aaa");
     navigate('/EventEdit/' + id);
   }
 
