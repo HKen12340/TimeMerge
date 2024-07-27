@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import './App.css';
 import React,{useState} from 'react';
 
+
 function EventCreate() {
   const navigate = useNavigate();
 
@@ -65,6 +66,7 @@ const SubmitEevnts = () => {
     })
 }
 
+
   return (
     <div>
       <header>
@@ -89,8 +91,9 @@ const SubmitEevnts = () => {
         <label htmlFor="">メール本文</label>
         <textarea cols="50" rows="6" name='mailText' id='mailText'></textarea>
         <button type="button" onClick={SubmitEevnts}>送信</button>
-      </form>
+      </form>      
     </div>
+    
   );
 
 }

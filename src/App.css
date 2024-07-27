@@ -37,3 +37,14 @@ input[type="radio"]+label img {
 input[type="radio"]:checked+label img {
   opacity: 1;
 }
+
+#reward {
+  margin: 500px 500px;
+  color: yellow;
+}
+
+.parent {
+  padding: 500px 500px;
+  position: relative;
+  overflow: hidden;
+}
