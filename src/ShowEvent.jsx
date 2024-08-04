@@ -1,27 +1,28 @@
 import './App.css';
 import { React, useEffect, useState } from "react";
 import { useParams,useNavigate } from "react-router-dom";
+import { PropagateLoader } from 'react-spinners';
 import maru from './maru.png';
 import batu from './batu.png';
 
  function ShowEvent() {
   const { id } = useParams();
   const [Content,SetContent] = useState();
-  const [update,setUpdata]=useState(false)//強制レンダリング用ステート
+  const [update,setUpdata]=useState(false);//強制レンダリング用ステート
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const fetchEventData = async () => {
     const url = 'http://127.0.0.1:8000/api/show?id='+id;
-    try {
+    try {      
       const res = await fetch(url);
       const json = await res.json();
-      console.log(json);
       SetContent(Object.entries(json));
-      console.log(Content[0][1][0]["join_user"][0]["join_flag"]);
     } catch (e) {
       console.log("error", e);
     }
+    setIsLoading(false);
 }
 
   useEffect(()=>{
@@ -29,7 +30,7 @@ import batu from './batu.png';
   }, [update]);
   
   if (!Content) {
-    return <div>Loading...</div>;
+    return <PropagateLoader className='PropagateLoader' color="#36d7b7" size={40} />;
   }
 
   const event = Content[0][1][0];
@@ -54,7 +55,7 @@ import batu from './batu.png';
     console.log("username："+username)
     console.log("email"+email)
     console.log("remarks"+remarks)
-    
+    setIsLoading(true);
     var dateArray = [];
 
     for(let i = 0;i < event_date.length;i++){
@@ -70,7 +71,6 @@ import batu from './batu.png';
           }
       }
     }
-    console.log(dateArray)
     
     const postData = {
       'url':id,
@@ -79,9 +79,7 @@ import batu from './batu.png';
       'remarks':remarks,
       'flags':dateArray,
     }
-    console.log(postData);
-    console.log(JSON.stringify(postData));
-
+    
     fetch("http://127.0.0.1:8000/api/addSchedule",{
       method: 'POST',
       body:JSON.stringify(postData),
@@ -90,10 +88,8 @@ import batu from './batu.png';
       },
 
     }) .then((response) => {
-      console.log(response)
-      setUpdata(update?false:true)//強制レンダリング用ステート
+      setUpdata(update?false:true)//強制レンダリング用ステート      
     })
-    fetchEventData();
   }
 
   const eventEdit = () => {
@@ -119,14 +115,34 @@ import batu from './batu.png';
     })
   }
 
+  const DicicsionEvent = () =>{
+
+    const postData = {
+      'url':id
+    }
+
+    fetch("http://127.0.0.1:8000/api/sendMali",{
+      method: 'post',
+      body:JSON.stringify(postData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }) .then((response) => {
+      console.log(response.json())
+    })
+  }
+
   return (
     <div>
      URL：http://localhost:3000/show/{id}
-       {Content === undefined ? "" : 
+       {/* {Content === undefined ? "" :  */}
+       { isLoading ? <PropagateLoader className='PropagateLoader' color="#36d7b7" size={40} /> :
          <div>
            <h1>{event_name}</h1>
            <p>{description}</p>           
+           <div className="table-wrap">
            <table className='table'>
+            
            <tr>
             <th>日程</th>
             {join_user.map((user,index) => (
@@ -148,10 +164,11 @@ import batu from './batu.png';
             ))
            }
            </table>
+          </div>
            <form action="" method='POST' name='form1'>
               {
               event_date.map((event_date,index1) => (
-                <div>
+                <div className='selectArea'>
                   {event_date.date}
                   <input type="radio" id={"r"+index1 + "L"} name={"r"+index1}  value="1" />
                   <label htmlFor={"r"+index1 + "L"}><img src={maru} with="40" height="40" /></label>
@@ -160,7 +177,7 @@ import batu from './batu.png';
                 </div>
               ))
               }
-              <div>
+              <div className=''>
                 <label htmlFor="">名前</label>
                 <input type="text" name='username' id='username' required/>
               </div>
@@ -173,14 +190,15 @@ import batu from './batu.png';
                 <textarea name="remarks" id="remarks"></textarea>
               </div>
               <div>
+                <button type='button' onClick={DicicsionEvent}>メール送信</button>
                 <button type="button" onClick={SubmitEevnts}>送信</button>
                 <button type='button' onClick={eventEdit}>編集</button>
                 <button type='button' onClick={eventDelete}>削除</button>
               </div>
           </form>
          </div>
-        } 
-    </div>
+        }
+    </div>    
   );
 }
 

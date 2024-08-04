@@ -7,7 +7,7 @@ function EventCreate() {
   const navigate = useNavigate();
 
   const[dateInputList,SetdateInputList] = useState([
-    <input type='date' name='date[]' id='dates'></input>
+    <input type='datetime-local' name='date[]' id='dates'></input>
   ]);
 
   const addDateInput = () => {

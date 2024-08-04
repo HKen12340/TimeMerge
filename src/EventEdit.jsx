@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { PropagateLoader } from 'react-spinners';
 
 function EventEdit(){
   const { id } = useParams();
@@ -31,7 +32,7 @@ function EventEdit(){
 
 
   if (!Content) {
-    return <div>Loading...</div>;
+    return <PropagateLoader className='PropagateLoader' color="#36d7b7" size={40} />;
   }
 
   const event = Content[0][1][0];
