@@ -135,7 +135,6 @@ import batu from './batu.png';
   return (
     <div>
      URL：http://localhost:3000/show/{id}
-       {/* {Content === undefined ? "" :  */}
        { isLoading ? <PropagateLoader className='PropagateLoader' color="#36d7b7" size={40} /> :
          <div>
            <h1>{event_name}</h1>

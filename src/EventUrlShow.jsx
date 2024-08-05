@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useReward } from "react-rewards";
 import { useEffect } from "react";
+import './App.css';
 
 function EventUrlShow(){
   const { id } = useParams();
@@ -33,13 +34,19 @@ function EventUrlShow(){
 
   return(
     <div>
-        <h1>イベントが作成されました。以下のURLを共有しましょう。</h1>
-        <h1>URL：<a>http://localhost:3000/show/{id}</a></h1>
-        <div className="parent">
-          <span id="leftRewardId">　</span>
-          <span id="rightRewardId">　</span>
-          <span id="rewardId">　</span>
+      <header>
+          <p>TimeMerge</p>
+      </header>
+      <div className="parent">
+          <div id="leftRewardId">　</div>
+          <div id="rightRewardId">　</div>
+          <div id="rewardId">　</div>
         </div>
+        <section className="EventUrlSection">
+          <h1>イベントが作成されました。以下のURLを共有しましょう。</h1>
+          <h1>URL：<a>http://localhost:3000/show/{id}</a></h1>
+          </section>
+        
     </div>
   )
   
