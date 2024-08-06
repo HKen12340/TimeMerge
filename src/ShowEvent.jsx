@@ -134,11 +134,20 @@ import batu from './batu.png';
 
   return (
     <div>
-     URL：http://localhost:3000/show/{id}
        { isLoading ? <PropagateLoader className='PropagateLoader' color="#36d7b7" size={40} /> :
          <div>
-           <h1>{event_name}</h1>
-           <p>{description}</p>           
+          <header>
+            <p>TimeMerge</p>            
+            <p className='HaederMenu'>
+              <button className='HaederBtn' type='button' onClick={DicicsionEvent}>日程確定メールを送信</button>
+              <button className='HaederBtn' type='button' onClick={eventEdit}>イベント編集</button>
+              <button className='HaederBtn' type='button' onClick={eventDelete}>削除</button>
+            </p>
+          </header>  
+          <section className='TitleSection'>
+            <h1>{event_name}</h1>
+            <p>{description}</p>        
+           </section>
            <div className="table-wrap">
            <table className='table'>
             
@@ -176,24 +185,23 @@ import batu from './batu.png';
                 </div>
               ))
               }
-              <div className=''>
-                <label htmlFor="">名前</label>
-                <input type="text" name='username' id='username' required/>
-              </div>
-              <div>
-              <label htmlFor="">メールアドレス</label>
-                <input type="email" name='email' id='email' />
-              </div>
-              <div>
-              <label htmlFor="">備考</label>
-                <textarea name="remarks" id="remarks"></textarea>
-              </div>
-              <div>
-                <button type='button' onClick={DicicsionEvent}>メール送信</button>
-                <button type="button" onClick={SubmitEevnts}>送信</button>
-                <button type='button' onClick={eventEdit}>編集</button>
-                <button type='button' onClick={eventDelete}>削除</button>
-              </div>
+              <section className='EventInputFrom'>
+                <section>
+                  <label htmlFor="">名前</label>
+                  <input className='TextInputClass' type="text" name='username' id='username' required/>
+                </section>
+                  <section>
+                    <label htmlFor="">メールアドレス</label>
+                    <input className='TextInputClass' type="email" name='email' id='email' />
+                  </section>
+                <section>
+                  <label htmlFor="">備考</label>
+                  <textarea cols="105" rows="15" name="remarks" id="remarks"></textarea>
+                </section>
+                <section className="SubmitBtnSection">
+                  <button className='SubmitBtn' type="button" onClick={SubmitEevnts}>参加する</button>
+                </section>
+              </section>
           </form>
          </div>
         }

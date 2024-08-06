@@ -11,6 +11,7 @@ header {
   font-weight: bold;
   color: white;
   line-height: 50px;
+  display: flex;
 }
 
 header p {
@@ -32,10 +33,20 @@ th {
   min-width: 100px;
 }
 
+th {
+  background-color: #C3DBFF;
+  color: #FFFF;
+}
+
+.TitleSection {
+  margin: 10px auto;
+  width: 50%;
+}
+
 .table-wrap {
   text-align: center;
   margin: 0 auto;
-  width: 80%;
+  width: 50%;
   overflow-x: scroll;
 }
 
@@ -87,16 +98,16 @@ input[type="radio"]:checked+label img {
   overflow: hidden;
 }
 
-#rightRewardId{
+#rightRewardId {
   position: absolute;
   top: 90%;
-  right: 10%; 
+  right: 10%;
 }
 
-#leftRewardId{
+#leftRewardId {
   position: absolute;
   top: 90%;
-  left: 10%; 
+  left: 10%;
 }
 
 
@@ -171,10 +182,9 @@ input[type="datetime-local"] {
   background-color: #9b9fee;
   color: white;
   border-radius: 5px;
-  border-color: white;
 }
 
-.CreateEventInputArea {
+.EventInputFrom {
   width: 50%;
   margin: 0 auto;
 }
@@ -207,4 +217,22 @@ section {
   z-index: 1;
   margin-top: 18%;
   text-align: center;
+}
+
+.HaederMenu {
+  margin-left: 40%;
+  padding: 3px 0;
+  /* display: flex; */
+}
+
+.HaederBtn {
+  border: none;
+  border-radius: 5px;
+  width: 150px;
+  height: 40px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #FFFF;
+  background-color: #7D82F2;
+  margin: 0 10px;
 }

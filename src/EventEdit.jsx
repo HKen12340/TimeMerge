@@ -1,3 +1,4 @@
+import './App.css';
 import { useParams } from "react-router-dom";
 import { React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -62,25 +63,36 @@ function EventEdit(){
     }) .catch(error => {
         console.log(error)
      });
-
   }
-
   return(
     <div>
         {Content === undefined ? "" : 
           <div>
+          <header>
+            <p>TimeMerge</p>
+          </header>
+          <section className='EventInputFrom'>
             <form method="put">
-              <label htmlFor="">イベント名</label>
-              <input type="text" id="eventName" defaultValue={EventName} 
-              onChange={(e) => setEventNameText(e.target.value)}/>
-              <label htmlFor="" >説明</label>
-              <textarea  id="descriptoin" defaultValue={Descriptoin}
-               onChange={(e) => setDescriptoin(e.target.value)}></textarea>
-               <label htmlFor="">メール本文</label>
-               <input type="text"  defaultValue={MailText} 
-                onChange={(e) => setMailText(e.target.value)}  />
-              <input type="button" onClick={SubmitEevnts} defaultValue="送信" />
-            </form>    
+              <section>
+                <label htmlFor="">イベント名</label>
+                <input className='TextInputClass' type="text" id="eventName" defaultValue={EventName} 
+                onChange={(e) => setEventNameText(e.target.value)}/>
+              </section>
+              <section>
+                <label htmlFor="" >説明</label>
+                <textarea cols="105" rows="15" id="descriptoin" defaultValue={Descriptoin}
+                onChange={(e) => setDescriptoin(e.target.value)}></textarea>
+              </section>
+              <section>
+                <label htmlFor="">メール本文</label>
+                <textarea cols="105" rows="15" defaultValue={MailText} 
+                  onChange={(e) => setMailText(e.target.value)}  />
+              </section>
+              <session className='SubmitBtnSection'>
+                <p><input className='SubmitBtn' type="button" onClick={SubmitEevnts} defaultValue="送信" /></p>
+              </session>
+            </form>
+            </section>    
           </div>
         }
     </div>

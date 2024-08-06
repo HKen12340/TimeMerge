@@ -1,18 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import './App.css';
-import React,{useState} from 'react';
-
+import { React, useEffect, useState } from "react";
+import { PropagateLoader } from 'react-spinners';
 
 function EventCreate() {
   const navigate = useNavigate();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const[dateInputList,SetdateInputList] = useState([
-    <input type='datetime-local' name='date[]' id='dates'></input>
+    <input type='datetime-local' name='date[]' className="DateTimeInputClass" id='dates'></input>
   ]);
 
   const addDateInput = () => {
     SetdateInputList([...dateInputList,
-        <input type='date' name='date[]'></input>
+        <input type='datetime-local' name='date[]' className="DateTimeInputClass"></input>
     ])
     console.log(...dateInputList)
   }
@@ -68,30 +70,47 @@ const SubmitEevnts = () => {
 
 
   return (
+    
     <div>
-      <header>
-        <h1>ヘッダー</h1>
-      </header>
-      <form action="" method='post' id='form1'> 
-        <label htmlFor="">イベント名</label>
-        <input type='text' name='name' id='eventName'></input>
-        <label htmlFor="">説明</label>
-        <textarea cols="50" rows="6" name='descriptoin' id='descriptoin'></textarea>
-        <ul>
-        {
-          Object.values(dateInputList).map((item,index) => (         
-           <div>
-             <li key={index}>{item}<button type='button' 
-             onClick={() => deleteDateInput(index)}>削除</button></li>
-            </div>
-          ))
-        }
-        </ul>
-        <button type='button' onClick={addDateInput}>日程追加</button>
-        <label htmlFor="">メール本文</label>
-        <textarea cols="50" rows="6" name='mailText' id='mailText'></textarea>
-        <button type="button" onClick={SubmitEevnts}>送信</button>
-      </form>      
+      { isLoading ? <PropagateLoader className='PropagateLoader' color="#36d7b7" size={40} /> :
+      <div>
+        <header>
+          <p>TimeMerge</p>
+        </header>
+        <section className="EventInputFrom">
+        <form action="" method='post' id='form1'> 
+          <section>
+            <p><label htmlFor="">イベント名</label></p>
+            <input type='text' name='name' id='eventName' className="TextInputClass"></input>
+          </section>
+          <section>
+            <p><label htmlFor="">説明</label></p>
+            <textarea cols="105" rows="15" name='descriptoin' id='descriptoin'></textarea>
+          </section>
+          <section>
+            <ul className="DateList">
+            {
+              Object.values(dateInputList).map((item,index) => (         
+              <div>
+                <li className="Dateli" key={index}>{item}<button type='button' className="DeleteBtn" 
+                onClick={() => deleteDateInput(index)}>削除</button></li>
+                </div>
+              ))
+            }
+            </ul>
+            <button type='button' onClick={addDateInput} className="AddDateTimeBtn">日程追加</button>
+          </section>
+          <section>
+            <p><label htmlFor="">メール本文</label></p>
+            <textarea cols="105" rows="15" name='mailText' id='mailText'></textarea>
+          </section>
+          <section className="SubmitBtnSection">
+            <button type="button" onClick={SubmitEevnts} className="SubmitBtn">送信</button>
+          </section>
+        </form>      
+        </section>
+      </div>
+    }
     </div>
     
   );
