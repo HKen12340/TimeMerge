@@ -7,11 +7,14 @@ function EventCreate() {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMegs, setErrorMsgs] = useState();
 
+  //DateTimeInputタグ管理ステート
   const[dateInputList,SetdateInputList] = useState([
     <input type='datetime-local' name='date[]' className="DateTimeInputClass" id='dates'></input>
   ]);
 
+  //DateTimeInputタグ追加
   const addDateInput = () => {
     SetdateInputList([...dateInputList,
         <input type='datetime-local' name='date[]' className="DateTimeInputClass"></input>
@@ -19,12 +22,14 @@ function EventCreate() {
     console.log(...dateInputList)
   }
 
+  //DateTimeInputタグ削除
   const deleteDateInput = (i) => {
     SetdateInputList(
       dateInputList.filter((dateInputList, index) => (index !== i))
     )
 }
 
+//Event作成
 const SubmitEevnts = () => {
   
   let form1 = document.getElementById('form1');
@@ -36,20 +41,18 @@ const SubmitEevnts = () => {
   
   var dateArray = [];
 
+  //htmlのname属性がdate[]の要素の値をdateArray配列に追加する
   fd.getAll("date[]").forEach(function(value) {
     dateArray.push(value);
   });
 
-
+  //送信用データ
   const postData = {
     'name':eventName,
     'description':descriptoin,
     'date':dateArray,
     'MailText':mailText
   }
-
-  console.log(postData);
-  console.log(JSON.stringify(postData));
   
     fetch("http://127.0.0.1:8000/api/create",{
       method: 'POST',
@@ -60,14 +63,22 @@ const SubmitEevnts = () => {
 
     }) .then((response) => {
       let jsonData = response.json();
-      
+      console.log(jsonData);
+
       //PromiseResultから値を取り出す
       jsonData.then(response => { 
-        navigate("/EventUrlShow/"+ response.EventUrl);
+        
+        console.log(response.errors)
+        //laravelのFormRequestのバリデーション結果にエラーが含まれていないか
+        if(response.errors == null){
+          navigate("/EventUrlShow/"+ response.EventUrl);
+        }else{
+          //laravelのFormRequestのCreateEventRequestクラスからエラーメッセージをErrorMsgsステートに代入する
+          setErrorMsgs(response.errors);          
+        }
       })
     })
 }
-
 
   return (
     
@@ -111,8 +122,14 @@ const SubmitEevnts = () => {
         </section>
       </div>
     }
-    </div>
-    
+    <ul>
+      { errorMegs == null ? "" :
+      Object.values(errorMegs).map((errormsg,index) => (
+        <li>{errormsg}</li>
+      ))
+      }
+    </ul>
+    </div>    
   );
 
 }

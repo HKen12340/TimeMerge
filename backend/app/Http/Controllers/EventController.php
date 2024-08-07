@@ -9,28 +9,18 @@ use App\Models\EventDate;
 use App\Models\JoinFlag;
 use App\Models\JoinUser;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\DecisionNoticeEmail;
+use App\Http\requests\CreateEventRequest;
 
 class EventController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()//イベント読み込み
-    {
-        //$e = Event::all();
-        
-        
-        return response();
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Request $request) //イベント作成
+    public function create(CreateEventRequest $request) //イベント作成
     {
+        clock($request);
         $UrlId = Str::random(20);//ランダム文字20字生成　IDがかぶった際の処理を追加予定
         $Event = new Event();
-        //clock($EventId); デバック
         $EventModel = $Event->create([
             'event_name' => $request->name,
             'description' => $request->description,
@@ -53,17 +43,6 @@ class EventController extends Controller
         return response()->json(["message" => "success create Event!","EventUrl" => $EventModel->url]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Request $request)
     {        
         $Data = Event::with(['EventDate','joinUser'])->where('url',$request->id)->get()->toArray();
@@ -72,9 +51,6 @@ class EventController extends Controller
         return response()->json(["event" => $Data],201);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function addSchedule(Request $request)
     {
         $EventId = Event::where("url",$request->url)->first();
@@ -117,9 +93,17 @@ class EventController extends Controller
         return response()->json(["message" => "success update Event!"],201);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    public function sendMali(){
+        $DecisionNoticeEmail = new DecisionNoticeEmail();
+        Mail::send($DecisionNoticeEmail);
+
+        if(count(Mail::failures()) > 0){
+            return response()->json(["message" => "メールの送信に失敗しました"],201);
+        }else{
+            return response()->json(["message" => "メールを送信しました"],201);
+        }
+    }
+
     public function destroy(Request $request)//イベント削除
     {
         $Event = new Event();

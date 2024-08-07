@@ -9,10 +9,11 @@ import batu from './batu.png';
   const { id } = useParams();
   const [Content,SetContent] = useState();
   const [update,setUpdata]=useState(false);//強制レンダリング用ステート
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);//ロード判定ステート
 
   const navigate = useNavigate();
 
+  //データ引っ張る用
   const fetchEventData = async () => {
     const url = 'http://127.0.0.1:8000/api/show?id='+id;
     try {      
@@ -25,10 +26,12 @@ import batu from './batu.png';
     setIsLoading(false);
 }
 
+  //強制レンダリング用
   useEffect(()=>{
     fetchEventData(); //呼び出し
   }, [update]);
   
+  //ContentステートがNullあればロードアニメーションを表示する
   if (!Content) {
     return <PropagateLoader className='PropagateLoader' color="#36d7b7" size={40} />;
   }
@@ -43,7 +46,8 @@ import batu from './batu.png';
   //JSONデータを分割代入
   const {event_name, description, join_user, event_date} = event; 
 
-  const SubmitEevnts = () => {
+  //スケジュール追加関数
+  const AddSchedule = () => {
     let username = document.getElementById('username').value;
     let email = document.getElementById('email').value;
     let remarks = document.getElementById('remarks').value;
@@ -52,12 +56,10 @@ import batu from './batu.png';
     document.getElementById('email').value = "";
     document.getElementById('remarks').value = "";
 
-    console.log("username："+username)
-    console.log("email"+email)
-    console.log("remarks"+remarks)
-    setIsLoading(true);
+    setIsLoading(true);//ロードアニメーションを表示する
     var dateArray = [];
 
+    //参加不参加の結果をdateArray配列に追加する
     for(let i = 0;i < event_date.length;i++){
       let elements = document.getElementsByName('r'+i);
       let len = elements.length;
@@ -72,6 +74,7 @@ import batu from './batu.png';
       }
     }
     
+    //送信用データ
     const postData = {
       'url':id,
       'username':username,
@@ -92,44 +95,52 @@ import batu from './batu.png';
     })
   }
 
+  //編集ページへ飛ぶ
   const eventEdit = () => {
-    navigate('/EventEdit/' + id);
+     navigate('/EventEdit/' + id);
   }
 
+  //スケジュール削除
   const eventDelete = () => {
-    const postData = {
-      'url':id
+    let ConfirmResult = window.confirm("イベントの削除を行いますか？");
+    if(ConfirmResult == true){
+      const postData = {
+        'url':id
+      }
+      console.log(postData);
+      console.log(JSON.stringify(postData));
+
+      fetch("http://127.0.0.1:8000/api/delete",{
+        method: 'delete',
+        body:JSON.stringify(postData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+
+      }) .then((response) => {
+        navigate('/');
+      })
     }
-    console.log(postData);
-    console.log(JSON.stringify(postData));
-
-    fetch("http://127.0.0.1:8000/api/delete",{
-      method: 'delete',
-      body:JSON.stringify(postData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-
-    }) .then((response) => {
-      navigate('/');
-    })
   }
 
+  //日時確定メールを送る
   const DicicsionEvent = () =>{
+    let ConfirmResult = window.confirm("日程の確定メールを送信しますか？");
+    if(ConfirmResult == true){
+      const postData = {
+        'url':id
+      }
 
-    const postData = {
-      'url':id
+      fetch("http://127.0.0.1:8000/api/sendMali",{
+        method: 'post',
+        body:JSON.stringify(postData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }) .then((response) => {
+        console.log(response.json())
+      })
     }
-
-    fetch("http://127.0.0.1:8000/api/sendMali",{
-      method: 'post',
-      body:JSON.stringify(postData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }) .then((response) => {
-      console.log(response.json())
-    })
   }
 
   return (
@@ -174,10 +185,11 @@ import batu from './batu.png';
            </table>
           </div>
            <form action="" method='POST' name='form1'>
+           <section className='ScheduleInputArea'>
               {
               event_date.map((event_date,index1) => (
-                <div className='selectArea'>
-                  {event_date.date}
+                <div className='ScheduleSelect'>                  
+                  <div className='ScheduleDate'>{event_date.date}</div>
                   <input type="radio" id={"r"+index1 + "L"} name={"r"+index1}  value="1" />
                   <label htmlFor={"r"+index1 + "L"}><img src={maru} with="40" height="40" /></label>
                   <input type="radio" id={"r"+index1 +"R"} name={"r"+index1} value="0" checked/>
@@ -185,6 +197,7 @@ import batu from './batu.png';
                 </div>
               ))
               }
+              </section>
               <section className='EventInputFrom'>
                 <section>
                   <label htmlFor="">名前</label>
@@ -199,7 +212,7 @@ import batu from './batu.png';
                   <textarea cols="105" rows="15" name="remarks" id="remarks"></textarea>
                 </section>
                 <section className="SubmitBtnSection">
-                  <button className='SubmitBtn' type="button" onClick={SubmitEevnts}>参加する</button>
+                  <button className='SubmitBtn' type="button" onClick={AddSchedule}>参加する</button>
                 </section>
               </section>
           </form>

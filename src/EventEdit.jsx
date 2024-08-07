@@ -12,6 +12,7 @@ function EventEdit(){
   const [MailText, setMailText] = useState("");
   const navigate = useNavigate();
 
+  //編集用のデータを持ってくる
   const fetchEventData = async () => {
     const url = 'http://127.0.0.1:8000/api/show?id='+id;
     try {
@@ -42,27 +43,29 @@ function EventEdit(){
     return <div>入力されたIDは存在しないかすでに削除されています</div>;
   }
 
-  const  SubmitEevnts = () => {
-    const postData = {
-      'name':EventName,
-      'description':Descriptoin,
-      'mail_text':MailText,
-      'url':id
+  //スケジュール更新
+  const  UpdateEevnts = () => {
+    let ConfirmResult = window.confirm("イベントの更新を行いますか？");
+    if(ConfirmResult == true){
+      const postData = {
+        'name':EventName,
+        'description':Descriptoin,
+        'mail_text':MailText,
+        'url':id
+      }
+
+      fetch("http://127.0.0.1:8000/api/update",{
+        method: 'put',
+        body:JSON.stringify(postData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }) .then((response) => {
+            navigate("/show/"+ id);
+      }) .catch(error => {
+          console.log(error)
+      });
     }
-
-    console.log(JSON.stringify(postData))
-
-     fetch("http://127.0.0.1:8000/api/update",{
-      method: 'put',
-      body:JSON.stringify(postData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }) .then((response) => {
-          navigate("/show/"+ id);
-    }) .catch(error => {
-        console.log(error)
-     });
   }
   return(
     <div>
@@ -89,7 +92,7 @@ function EventEdit(){
                   onChange={(e) => setMailText(e.target.value)}  />
               </section>
               <session className='SubmitBtnSection'>
-                <p><input className='SubmitBtn' type="button" onClick={SubmitEevnts} defaultValue="送信" /></p>
+                <p><input className='SubmitBtn' type="button" onClick={UpdateEevnts} defaultValue="送信" /></p>
               </session>
             </form>
             </section>    
