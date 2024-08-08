@@ -26,7 +26,8 @@ class CreateEventRequest extends FormRequest
         return [
             'name' => 'required|string|max:25',
             'MailText' => 'string|nullable',
-            'date' => 'required',
+            'date' => 'required|array|min:1',
+            'date.*' => 'min:1',
             'description' => 'string|nullable'
         ];
     }
@@ -34,7 +35,8 @@ class CreateEventRequest extends FormRequest
     public function messages(){
         return[
             'name.required' => 'イベント名は必須です',
-            'date.required' => '日時は必須です'
+            'date.required' => '日時は必須です',
+            'date.*.min' => '日付を入力してください',
         ];
     }
 
@@ -42,6 +44,4 @@ class CreateEventRequest extends FormRequest
         $response['errors'] = $validator->errors()->toArray();
         throw new HttpResponseException(response()->json($response));
     }
-
-
 }

@@ -88,7 +88,19 @@ const SubmitEevnts = () => {
         <header>
           <p>TimeMerge</p>
         </header>
-        <section className="EventInputFrom">
+        <section className="EventInputFrom">           
+            { errorMegs == null ? "" :
+              <section className="errorMsgCom">
+                <p>以下のエラーが発生しました。</p>
+                <ul className="ErrorMsgList">
+                {
+                  Object.values(errorMegs).map((errormsg,index) => (
+                    <li>{errormsg}</li>
+                  ))
+                }
+                </ul>
+              </section>            
+            }            
         <form action="" method='post' id='form1'> 
           <section>
             <p><label htmlFor="">イベント名</label></p>
@@ -122,13 +134,7 @@ const SubmitEevnts = () => {
         </section>
       </div>
     }
-    <ul>
-      { errorMegs == null ? "" :
-      Object.values(errorMegs).map((errormsg,index) => (
-        <li>{errormsg}</li>
-      ))
-      }
-    </ul>
+    
     </div>    
   );
 

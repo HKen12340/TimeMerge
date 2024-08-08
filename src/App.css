@@ -242,3 +242,15 @@ section {
   background-color: #7D82F2;
   margin: 0 10px;
 }
+
+.errorMsgCom{
+  border: #a5a5a5 0.5px solid;
+  border-radius: 5px;
+  background-color: red;
+  color: white;
+  padding: 15px;
+}
+
+.ErrorMsgList{
+  list-style: none;
+}
