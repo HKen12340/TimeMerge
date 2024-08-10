@@ -10,6 +10,7 @@ import batu from './batu.png';
   const [Content,SetContent] = useState();
   const [update,setUpdata]=useState(false);//強制レンダリング用ステート
   const [isLoading, setIsLoading] = useState(false);//ロード判定ステート
+  const [errorMegs, setErrorMsgs] = useState();
 
   const navigate = useNavigate();
 
@@ -68,7 +69,6 @@ import batu from './batu.png';
       for (let i = 0; i < len; i++){
           if (elements.item(i).checked){
               checkValue = elements.item(i).value;
-              console.log(checkValue);
               dateArray.push(checkValue);
           }
       }
@@ -91,7 +91,14 @@ import batu from './batu.png';
       },
 
     }) .then((response) => {
-      setUpdata(update?false:true)//強制レンダリング用ステート      
+      setUpdata(update?false:true)//強制レンダリング用ステート
+      let jsonData = response.json();
+      jsonData.then(response => { 
+        if(response.errors != null){
+          //laravelのFormRequestからエラーメッセージをErrorMsgsステートに代入する
+          setErrorMsgs(response.errors);          
+        }
+      })
     })
   }
 
@@ -154,14 +161,13 @@ import batu from './batu.png';
               <button className='HaederBtn' type='button' onClick={eventEdit}>イベント編集</button>
               <button className='HaederBtn' type='button' onClick={eventDelete}>削除</button>
             </p>
-          </header>  
+          </header>
           <section className='TitleSection'>
             <h1>{event_name}</h1>
             <p>{description}</p>        
-           </section>
+           </section>      
            <div className="table-wrap">
-           <table className='table'>
-            
+           <table className='table'>            
            <tr>
             <th>日程</th>
             {join_user.map((user,index) => (
@@ -169,7 +175,7 @@ import batu from './batu.png';
               ))
             }
             </tr>
-           {event_date.map((event_date,index1) => (              
+           {event_date.map((event_date,index1) => (
               <tr className='table'>
                 <td>{event_date.date}</td>
                 {
@@ -184,8 +190,8 @@ import batu from './batu.png';
            }
            </table>
           </div>
-           <form action="" method='POST' name='form1'>
-           <section className='ScheduleInputArea'>
+           <form action="" method='POST' name='form1'>            
+           <section className='ScheduleInputArea'>                        
               {
               event_date.map((event_date,index1) => (
                 <div className='ScheduleSelect'>                  
@@ -199,6 +205,18 @@ import batu from './batu.png';
               }
               </section>
               <section className='EventInputFrom'>
+                { errorMegs == null ? "" :
+                  <section className="errorMsgCom">
+                    <p>以下のエラーが発生しました。</p>
+                    <ul className="ErrorMsgList">
+                    {
+                      Object.values(errorMegs).map((errormsg,index) => (
+                        <li>{errormsg}</li>
+                      ))
+                    }
+                    </ul>
+                  </section>            
+                }        
                 <section>
                   <label htmlFor="">名前</label>
                   <input className='TextInputClass' type="text" name='username' id='username' required/>

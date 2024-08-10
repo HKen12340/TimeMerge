@@ -11,6 +11,7 @@ function EventEdit(){
   const [Descriptoin, setDescriptoin] = useState("");
   const [MailText, setMailText] = useState("");
   const navigate = useNavigate();
+  const [errorMegs, setErrorMsgs] = useState();
 
   //編集用のデータを持ってくる
   const fetchEventData = async () => {
@@ -61,10 +62,19 @@ function EventEdit(){
           'Content-Type': 'application/json',
         },
       }) .then((response) => {
+        let jsonData = response.json();
+        jsonData.then(response => { 
+          if(response.errors != null){
+            //laravelのFormRequestからエラーメッセージをErrorMsgsステートに代入する
+            setErrorMsgs(response.errors);          
+          }else{
             navigate("/show/"+ id);
-      }) .catch(error => {
-          console.log(error)
-      });
+          }
+        })
+      }) 
+      // .catch(error => {
+      //     console.log(error)
+      // });
     }
   }
   return(
@@ -75,6 +85,18 @@ function EventEdit(){
             <p>TimeMerge</p>
           </header>
           <section className='EventInputFrom'>
+              { errorMegs == null ? "" :
+                <section className="errorMsgCom">
+                  <p>以下のエラーが発生しました。</p>
+                  <ul className="ErrorMsgList">
+                  {
+                    Object.values(errorMegs).map((errormsg,index) => (
+                      <li>{errormsg}</li>
+                    ))
+                  }
+                  </ul>
+                </section>            
+              } 
             <form method="put">
               <section>
                 <label htmlFor="">イベント名</label>

@@ -11,6 +11,7 @@
     "react-rewards": "^2.0.4",
     "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
+    "react-spinners": "^0.14.1",
     "react-use": "^17.5.1",
     "timers": "^0.1.1",
     "web-vitals": "^2.1.4"

@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string("event_name");
-            $table->text("description");
+            $table->text("description")->nullable();
             $table->string("url");
-            $table->text("mail_text");
+            $table->text("mail_text")->nullable();
             $table->timestamps();
         });
 
@@ -39,7 +39,7 @@ return new class extends Migration
             cascadeOnDelete();
 
             $table->string("name");
-            $table->string("email");
+            $table->string("email")->nullable();
             $table->timestamps();
         });
 
