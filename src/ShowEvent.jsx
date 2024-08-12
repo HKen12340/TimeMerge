@@ -49,6 +49,8 @@ import batu from './batu.png';
 
   //スケジュール追加関数
   const AddSchedule = () => {
+    setErrorMsgs(null);//エラーメッセージ リセット
+
     let username = document.getElementById('username').value;
     let email = document.getElementById('email').value;
     let remarks = document.getElementById('remarks').value;

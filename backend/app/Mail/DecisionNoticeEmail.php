@@ -12,13 +12,16 @@ use Illuminate\Queue\SerializesModels;
 class DecisionNoticeEmail extends Mailable
 {
     use Queueable, SerializesModels;
+    
+    public $content;
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($content)
     {
-        
+        $this->content = $content;
+        clock($this->content);
     }
 
     /**
@@ -34,12 +37,12 @@ class DecisionNoticeEmail extends Mailable
     /**
      * Get the message content definition.
      */
-    // public function content(): Content
-    // {
-    //     return new Content(
-    //         view: 'view.name',
-    //     );
-    // }
+    //public function content(): Content
+    //{
+        // return new Content(
+        //     view: 'views.name',
+        // );
+    //}
 
     public function build()
     {
@@ -48,7 +51,10 @@ class DecisionNoticeEmail extends Mailable
                     ->bcc('ccc@example.com')            // BCC
                     ->subject('会員登録が完了しました')     // 件名
                     ->view('mail.DecisionNoticeEmail')         // 本文（HTMLメール）
-                    ->text('mail.DecisionNoticeEmail_text');   // 本文（プレーンテキストメール）                   
+                    ->text('mail.DecisionNoticeEmail_text')   // 本文（プレーンテキストメール）                   
+                    ->with([                                    // ビューで使う変数
+                        'content', $this->content,
+                    ]);
     }
 
     /**

@@ -82,14 +82,14 @@ class EventController extends Controller
     }
 
     public function sendMali(){
-        $DecisionNoticeEmail = new DecisionNoticeEmail();
+        $DecisionNoticeEmail = new DecisionNoticeEmail("aaa");
         Mail::send($DecisionNoticeEmail);
 
-        if(count(Mail::failures()) > 0){
-            return response()->json(["message" => "メールの送信に失敗しました"],201);
-        }else{
+        //if(count(Mail::failures()) > 0){
+            //return response()->json(["message" => "メールの送信に失敗しました"],201);
+        //}else{
             return response()->json(["message" => "メールを送信しました"],201);
-        }
+        //}
     }
 
     public function destroy(Request $request)//イベント削除
