@@ -14,6 +14,7 @@ use App\Mail\DecisionNoticeEmail;
 use App\Http\requests\CreateEventRequest;
 use App\Http\requests\AddScheduleRequest;
 use App\Http\requests\UpdateScheduleRequest;
+use App\Http\requests\SubmitEmailRequest;
 
 class EventController extends Controller
 {
@@ -81,8 +82,10 @@ class EventController extends Controller
         return response()->json(["message" => "success update Event!"],201);
     }
 
-    public function sendMali(){
-        $DecisionNoticeEmail = new DecisionNoticeEmail("aaa");
+    public function sendMali(SubmitEmailRequest $request){        
+        $EventData = Event::with(['EventDate','joinUser'])->where('url',$request->id)->get()->toArray();
+        
+        $DecisionNoticeEmail = new DecisionNoticeEmail($EventData,$request->DecesionDates);
         Mail::send($DecisionNoticeEmail);
 
         //if(count(Mail::failures()) > 0){

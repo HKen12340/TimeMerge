@@ -12,16 +12,23 @@ use Illuminate\Queue\SerializesModels;
 class DecisionNoticeEmail extends Mailable
 {
     use Queueable, SerializesModels;
-    
-    public $content;
+    public $EventDatas;
+    public $DecesionDates;
+    public $MailText;
+    public $EventMenbers;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($content)
+    public function __construct($EventDatas,$DecesionDates)
     {
-        $this->content = $content;
-        clock($this->content);
+        $this->EventDatas = $EventDatas;
+        $this->DecesionDates = $DecesionDates;
+        $this->MailText = $this->EventDatas[0]["mail_text"];
+        $this->EventMenbers = array_column($this->EventDatas[0]["join_user"],"name");
+        clock($this->EventDatas);
+        clock($this->DecesionDates);
+        clock();
     }
 
     /**
@@ -46,14 +53,18 @@ class DecisionNoticeEmail extends Mailable
 
     public function build()
     {
+       
+// ビューで使う変数                        
 				return $this->to('aaa@example.com')             // 宛先
                     ->cc('bbb@example.com')             // CC
                     ->bcc('ccc@example.com')            // BCC
                     ->subject('会員登録が完了しました')     // 件名
                     ->view('mail.DecisionNoticeEmail')         // 本文（HTMLメール）
                     ->text('mail.DecisionNoticeEmail_text')   // 本文（プレーンテキストメール）                   
-                    ->with([                                    // ビューで使う変数
-                        'content', $this->content,
+                    ->with([
+                        "Text" => $this->MailText,
+                        "Dates" => $this->DecesionDates,
+                        "Members" => $this->EventMenbers
                     ]);
     }
 
