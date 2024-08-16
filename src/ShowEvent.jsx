@@ -134,22 +134,23 @@ import batu from './batu.png';
 
   //日時確定メールを送る
   const DicicsionEvent = () =>{
-    let ConfirmResult = window.confirm("日程の確定メールを送信しますか？");
-    if(ConfirmResult == true){
-      const postData = {
-        'url':id
-      }
+    // let ConfirmResult = window.confirm("日程の確定メールを送信しますか？");
+    // if(ConfirmResult == true){
+    //   const postData = {
+    //     'url':id
+    //   }
 
-      fetch("http://127.0.0.1:8000/api/sendMali",{
-        method: 'post',
-        body:JSON.stringify(postData),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }) .then((response) => {
-        console.log(response.json())
-      })
-    }
+    //   fetch("http://127.0.0.1:8000/api/sendMali",{
+    //     method: 'post',
+    //     body:JSON.stringify(postData),
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //   }) .then((response) => {
+    //     console.log(response.json())
+    //   })
+    // }
+    navigate('/EventDecision/' + id); 
   }
 
   return (

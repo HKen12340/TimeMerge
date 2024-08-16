@@ -6,6 +6,8 @@ import EventCreate from './EventCreate';
 import ShowEvent from './ShowEvent';
 import EventUrlShow from './EventUrlShow';
 import EventEdit from './EventEdit';
+import EventDecision from './EventDecision';
+import EmailSubmitAfter from './EmailSubmitAfter';
 import Page404 from './NotFound';
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
         <Route path='/show/:id' element={<ShowEvent />}/>
         <Route path='/EventUrlShow/:id' element={<EventUrlShow />}/>
         <Route path='/EventEdit/:id' element={<EventEdit />}/>
+        <Route path='/EventDecision/:id' element={<EventDecision />}/>
+        <Route path='/EmailSubmitAfter' element={<EmailSubmitAfter />}/>
         <Route path="*" element={<Page404 />} />
       </Routes>
     </BrowserRouter>
