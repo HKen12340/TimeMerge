@@ -1,9 +1,10 @@
-メールテスト
-会員登録ありがとうございます。
-無事に登録完了しました。
+「{{ $EventName }}」スケジュール確定のお知らせ
+
 {{ $Text }}
 
-日付
+{{ $EventName }}の日程が決定しました。
+
+日時
 @foreach ($Dates as $Date)
   {{ $Date }}
 @endforeach
