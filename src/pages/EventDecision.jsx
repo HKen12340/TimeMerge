@@ -1,9 +1,7 @@
-import './App.css';
+import '../App.css';
 import { React, useEffect, useState } from "react";
 import { useParams,useNavigate } from "react-router-dom";
 import { PropagateLoader } from 'react-spinners';
-import maru from './maru.png';
-import batu from './batu.png';
 
  function EventDecision() {
   const { id } = useParams();
@@ -48,7 +46,7 @@ import batu from './batu.png';
 
   //日時確定メールを送る
   const DicicsionEvent = () =>{
-    let ConfirmResult = window.confirm("日程の確定メールを送信しますか？");
+    let ConfirmResult = window.confirm("日程の確定メールを送信しますか？送信後にイベントは削除されます。");
     if(ConfirmResult == true){
 
       const selectedValues = [];
@@ -77,7 +75,7 @@ import batu from './batu.png';
             //laravelのFormRequestからエラーメッセージをErrorMsgsステートに代入する
             setErrorMsgs(response.errors);          
           }else{
-            //navigate('/EmailSubmitAfter');
+            navigate('/EmailSubmitAfter');
           }
         })
       })
@@ -103,7 +101,7 @@ import batu from './batu.png';
                     }
                     </ul>
                   </section>            
-                }
+            }
             <h1>{event_name}</h1>
             <p>{description}</p>        
            </section>      

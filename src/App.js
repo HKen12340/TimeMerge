@@ -2,13 +2,13 @@ import './App.css';
 import React from 'react';
 import {BrowserRouter,Route,Routes,Link} from 'react-router-dom';
 
-import EventCreate from './EventCreate'; 
-import ShowEvent from './ShowEvent';
-import EventUrlShow from './EventUrlShow';
-import EventEdit from './EventEdit';
-import EventDecision from './EventDecision';
-import EmailSubmitAfter from './EmailSubmitAfter';
-import Page404 from './NotFound';
+import EventCreate from './pages/EventCreate'; 
+import ShowEvent from './pages/ShowEvent';
+import EventUrlShow from './pages/EventUrlShow';
+import EventEdit from './pages/EventEdit';
+import EventDecision from './pages/EventDecision';
+import EmailSubmitAfter from './pages/EmailSubmitAfter';
+import Page404 from './pages/NotFound';
 
 function App() {
 

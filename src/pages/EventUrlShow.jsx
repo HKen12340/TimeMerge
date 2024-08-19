@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useReward } from "react-rewards";
 import { useEffect } from "react";
-import './App.css';
+import '../App.css';
 
 function EventUrlShow(){
   const { id } = useParams();

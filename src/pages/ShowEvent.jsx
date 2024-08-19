@@ -1,9 +1,9 @@
-import './App.css';
+import '../App.css';
 import { React, useEffect, useState } from "react";
 import { useParams,useNavigate } from "react-router-dom";
 import { PropagateLoader } from 'react-spinners';
-import maru from './maru.png';
-import batu from './batu.png';
+import maru from '../img/maru.png';
+import batu from '../img/batu.png';
 
  function ShowEvent() {
   const { id } = useParams();

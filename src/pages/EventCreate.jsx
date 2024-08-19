@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import './App.css';
+import '../App.css';
 import { React, useEffect, useState } from "react";
 import { PropagateLoader } from 'react-spinners';
 

@@ -26,8 +26,8 @@ class CreateEventRequest extends FormRequest
         return [
             'name' => 'required|string|max:25',
             'MailText' => 'string|nullable',
-            'date' => 'required|array|min:1',
-            'date.*' => 'min:1',
+            'date' => 'required|array|min:1',//配列は存在するか
+            'date.*' => 'min:1',//配列の中身が空白でないか
             'description' => 'string|nullable'
         ];
     }
