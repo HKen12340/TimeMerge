@@ -105,7 +105,7 @@ function EventEdit(){
               </section>
               <section>
                 <label htmlFor="" >説明</label>
-                <textarea cols="105" rows="15" id="descriptoin" defaultValue={Descriptoin}
+                <textarea className='TextAreaClass' rows="15" id="descriptoin" defaultValue={Descriptoin}
                 onChange={(e) => setDescriptoin(e.target.value)}></textarea>
               </section>
               <section>

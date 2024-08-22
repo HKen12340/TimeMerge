@@ -44,7 +44,7 @@ function EventUrlShow(){
         </div>
         <section className="EventUrlSection">
           <h1>イベントが作成されました。以下のURLを共有しましょう。</h1>
-          <h1>URL：<a>http://localhost:3000/show/{id}</a></h1>
+          <h1>URL：<a>http://localhost:3000/#/show/{id}</a></h1>
           </section>
         
     </div>

@@ -137,6 +137,11 @@ input[type="radio"]:checked+label img {
   height: 40px;
 }
 
+.TextAreaClass {
+  width: 100%;
+
+}
+
 /*DateTiem-localInput どこからでも選択可能 ここから*/
 input[type=datetime-local]::-webkit-calendar-picker-indicator {
   position: absolute;
@@ -243,7 +248,7 @@ section {
   margin: 0 10px;
 }
 
-.errorMsgCom{
+.errorMsgCom {
   border: #a5a5a5 0.5px solid;
   border-radius: 5px;
   background-color: red;
@@ -251,6 +256,6 @@ section {
   padding: 15px;
 }
 
-.ErrorMsgList{
+.ErrorMsgList {
   list-style: none;
 }

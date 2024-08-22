@@ -108,7 +108,7 @@ const SubmitEevnts = () => {
           </section>
           <section>
             <p><label htmlFor="">説明</label></p>
-            <textarea cols="105" rows="15" name='descriptoin' id='descriptoin'></textarea>
+            <textarea className='TextAreaClass' rows="15" name='descriptoin' id='descriptoin'></textarea>
           </section>
           <section>
             <ul className="DateList">
@@ -125,7 +125,7 @@ const SubmitEevnts = () => {
           </section>
           <section>
             <p><label htmlFor="">メール本文</label></p>
-            <textarea cols="105" rows="15" name='mailText' id='mailText'></textarea>
+            <textarea className='TextAreaClass' rows="15" name='mailText' id='mailText'></textarea>
           </section>
           <section className="SubmitBtnSection">
             <button type="button" onClick={SubmitEevnts} className="SubmitBtn">送信</button>

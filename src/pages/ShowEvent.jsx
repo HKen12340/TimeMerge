@@ -230,7 +230,7 @@ import batu from '../img/batu.png';
                   </section>
                 <section>
                   <label htmlFor="">備考</label>
-                  <textarea cols="105" rows="15" name="remarks" id="remarks"></textarea>
+                  <textarea className='TextAreaClass' rows="15" name="remarks" id="remarks"></textarea>
                 </section>
                 <section className="SubmitBtnSection">
                   <button className='SubmitBtn' type="button" onClick={AddSchedule}>参加する</button>
