@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import {BrowserRouter,Route,Routes,Link} from 'react-router-dom';
+import {HashRouter,Route,Routes,Link} from 'react-router-dom';
 
 import EventCreate from './pages/EventCreate'; 
 import ShowEvent from './pages/ShowEvent';
@@ -14,7 +14,7 @@ function App() {
 
   return (
     <div>
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path='/' element={<EventCreate />}/>
         <Route path='/show/:id' element={<ShowEvent />}/>
@@ -24,7 +24,7 @@ function App() {
         <Route path='/EmailSubmitAfter' element={<EmailSubmitAfter />}/>
         <Route path="*" element={<Page404 />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
     </div>
   );
 
