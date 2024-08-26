@@ -34,9 +34,10 @@ class EventController extends Controller
 
         foreach($request->date as $date){
             clock($date);
+            $ReplaceDate = str_replace('-', '/', str_replace('T', ' ', $date));
             $EventDate->create([
                 'event_id' => $EventModel->id,
-                'date' => $date
+                'date' => $ReplaceDate
             ]);
         }
         return response()->json(["message" => "success create Event!","EventUrl" => $EventModel->url]);
